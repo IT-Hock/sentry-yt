@@ -65,8 +65,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ env.VERSION }}
+            ghcr.io/${{ github.repository.lower() }}:latest
+            ghcr.io/${{ github.repository.lower() }}:${{ env.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
