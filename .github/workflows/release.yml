@@ -58,6 +58,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set lowercase repository
+        id: repo
+        run: echo "repo=${GITHUB_REPOSITORY,,}" >> $GITHUB_OUTPUT
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -65,8 +69,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository.lower() }}:latest
-            ghcr.io/${{ github.repository.lower() }}:${{ env.VERSION }}
+            ghcr.io/${{ steps.repo.outputs.repo }}:latest
+            ghcr.io/${{ steps.repo.outputs.repo }}:${{ env.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
