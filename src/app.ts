@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import Server from "./server";
+import Server from './server';
 
 const server = Server.Instance;
 server.start();

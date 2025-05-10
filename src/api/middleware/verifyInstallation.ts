@@ -17,14 +17,14 @@
  */
 
 import {NextFunction, Request, Response} from 'express';
-import {Logging} from "../../utils/logging";
-import SentryInstallationConfig from "../../config/SentryInstallationConfig";
+import {Logging} from '../../utils/logging';
+import SentryInstallationConfig from '../../config/SentryInstallationConfig';
 
 export default function verifyInstallation(
     request: Request,
     response: Response,
     next: NextFunction
-) {
+):void {
     if (process.env.NODE_ENV == 'test' && process.env.SKIP_SIG_VERIFY !== 'false') {
         Logging.Instance.logDebug('Skipping installation verification in test environment', 'SNY-YT');
         return next();
@@ -38,7 +38,7 @@ export default function verifyInstallation(
         return;
     }
 
-    let sentryInstallation = SentryInstallationConfig.Instance.getFromInstallationId(installationId);
+    const sentryInstallation = SentryInstallationConfig.Instance.getFromInstallationId(installationId);
     if (!sentryInstallation) {
         Logging.Instance.logError('Invalid installation id', 'SNY-YT');
         response.status(403).json({});

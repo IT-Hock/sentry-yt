@@ -15,6 +15,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import {Issue as YouTrackIssue, UpdateIssue} from 'youtrack-rest-client';
+import {IssueCustomField, IssueCustomFieldValue} from 'youtrack-rest-client/dist/entities/issueCustomField';
+
+export type SentryField = {
+    id: string;
+    label: string;
+    value: string;
+}
+
+export type YouTrackIssueExtended = YouTrackIssue & {
+    idReadable: string;
+}
+
+export type YouTrackCustomFieldExtended = IssueCustomField & {
+    value: IssueCustomFieldValue | null | string;
+}
+
+export type YouTrackUpdateIssueExtended = UpdateIssue & {
+    fields: YouTrackCustomFieldExtended[];
+}
 
 export class Issue {
     id: string;
@@ -30,7 +50,7 @@ export class Issue {
         this.sentryId = null;
     }
 
-    static fromYoutrackIssue(issue: any): Issue {
+    static fromYoutrackIssue(issue: YouTrackIssueExtended): Issue {
 
         if (!issue?.id || !issue?.summary) {
             throw new Error('YouTrack Issue is invalid');
@@ -39,11 +59,11 @@ export class Issue {
         return new Issue(issue.id, issue.idReadable, issue.summary);
     }
 
-    get label() {
+    get label():string {
         return `[${this.idReadable}] ${this.summary}`;
     }
 
-    get selectField() {
+    get selectField(): SentryField {
         return {
             id: this.id,
             label: this.label,

@@ -18,7 +18,7 @@
 
 import {createHmac} from 'crypto';
 import {NextFunction, Request, Response} from 'express';
-import {Logging} from "../../utils/logging";
+import {Logging} from '../../utils/logging';
 
 function getSignatureBody(req: Request): string {
     const stringifiedBody = JSON.stringify(req.body);

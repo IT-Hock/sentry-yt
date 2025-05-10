@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import * as fs from "node:fs";
-import {Request} from "express";
-import {Logging} from "../utils/logging";
+import * as fs from 'node:fs';
+import {Request} from 'express';
+import {Logging} from '../utils/logging';
 
 export type SentryInstallation = {
     readonly sentryInstallationId: string;
@@ -42,7 +42,7 @@ export default class SentryInstallationConfig {
         this.loadConfig();
     }
 
-    private loadConfig() {
+    private loadConfig():void {
         Logging.Instance.logDebug('Loading Config...', 'SENTRY');
 
         if (fs.existsSync('config/sentry.json')) {
@@ -85,7 +85,7 @@ export default class SentryInstallationConfig {
         }
     }
 
-    private loadFromEnv(configData: string) {
+    private loadFromEnv(configData: string):void {
         Logging.Instance.logDebug(
             'Loading Config from env variable',
             'SENTRY'

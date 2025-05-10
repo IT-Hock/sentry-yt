@@ -19,10 +19,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import request from 'supertest';
 import sentryRoutes from '../src/api/sentry';
+import commentCreatedPayload from './fixtures/comments/created.json';
+import commentUpdatedPayload from './fixtures/comments/updated.json';
+import commentDeletedPayload from './fixtures/comments/deleted.json';
 
 // Mock the verifySentrySignature middleware to always pass
 jest.mock('../src/api/middleware', () => ({
-  verifySentrySignature: (req: Request, res: Response, next: NextFunction) => next(),
+  verifySentrySignature: (req: Request, res: Response, next: NextFunction):void => next(),
 }));
 
 describe('Comments Webhooks', () => {
@@ -36,9 +39,6 @@ describe('Comments Webhooks', () => {
 
   describe('POST /sentry/webhook', () => {
     it('should handle comment created webhook', async () => {
-      // Load the fixture
-      const commentCreatedPayload = require('./fixtures/comments/created.json');
-
       // Send the request
       const response = await request(app)
         .post('/sentry/webhook')
@@ -50,9 +50,6 @@ describe('Comments Webhooks', () => {
     });
 
     it('should handle comment updated webhook', async () => {
-      // Load the fixture
-      const commentUpdatedPayload = require('./fixtures/comments/updated.json');
-
       // Send the request
       const response = await request(app)
         .post('/sentry/webhook')
@@ -64,9 +61,6 @@ describe('Comments Webhooks', () => {
     });
 
     it('should handle comment deleted webhook', async () => {
-      // Load the fixture
-      const commentDeletedPayload = require('./fixtures/comments/deleted.json');
-
       // Send the request
       const response = await request(app)
         .post('/sentry/webhook')

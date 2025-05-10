@@ -1,6 +1,6 @@
-import {PaginationOptions} from "youtrack-rest-client/dist/options/pagination_options";
-import {YoutrackClient} from "youtrack-rest-client/dist/youtrack_client";
-import {Issue} from "../models/Issue.model";
+import {PaginationOptions} from 'youtrack-rest-client/dist/options/pagination_options';
+import {YoutrackClient} from 'youtrack-rest-client/dist/youtrack_client';
+import {Issue} from '../models/Issue.model';
 
 export function constructSearchQuery(
     projectId: string,

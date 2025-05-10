@@ -1,4 +1,4 @@
-import {Logging} from "../utils/logging";
+import {Logging} from '../utils/logging';
 
 export default class YouTrackConfig {
     private readonly _youtrackBaseUrl: string;

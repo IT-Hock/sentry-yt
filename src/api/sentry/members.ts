@@ -18,8 +18,8 @@
 
 import express, {Request, Response} from 'express';
 
-import Server from "../../server";
-import {Logging} from "../../utils/logging";
+import Server from '../../server';
+import {Logging} from '../../utils/logging';
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ router.get('/', async (request: Request, response: Response): Promise<void> => {
     Logging.Instance.logDebug('Fetching users from Youtrack', 'SNY-YT');
     try {
         // TODO: Verify project <> sentry installation mapping
-        let youtrackUsers = await Server.Youtrack.users.all();
+        const youtrackUsers = await Server.Youtrack.users.all();
         if (youtrackUsers === undefined) {
             Logging.Instance.logError('YouTrack users not found', 'SNY-YT');
             response.status(500).json({
@@ -35,7 +35,7 @@ router.get('/', async (request: Request, response: Response): Promise<void> => {
             });
             return;
         }
-        let sentryUsers = youtrackUsers.map((user) => {
+        const sentryUsers = youtrackUsers.map((user) => {
             return {
                 id: user.id,
                 label: user.fullName,

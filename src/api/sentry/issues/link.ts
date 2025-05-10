@@ -17,14 +17,14 @@
  */
 
 import express from 'express';
-import Server from "../../../server";
-import {LinkRequestBody, LinkResponseBody} from "../../../utils/types";
-import SentryInstallationConfig from "../../../config/SentryInstallationConfig";
-import YouTrackConfig from "../../../config/YouTrackConfig";
-import {Logging} from "../../../utils/logging";
+import Server from '../../../server';
+import {LinkRequestBody, LinkResponseBody} from '../../../utils/types';
+import SentryInstallationConfig from '../../../config/SentryInstallationConfig';
+import YouTrackConfig from '../../../config/YouTrackConfig';
+import {Logging} from '../../../utils/logging';
+import {YouTrackUpdateIssueExtended} from '../../../models/Issue.model';
 
 const router = express.Router();
-//{"fields":{"issue_id":"3-0"},"issueId":1,"installationId":"14ee411f-4127-439d-a7ec-559ef41ea817","webUrl":"http://localhost:9000/organizations/it-hock/issues/1/","project":{"slug":"internal","id":1},"actor":{"type":"user","id":1,"name":""}}
 router.post('/', async (request, response):Promise<void> => {
     const linkRequest = request.body as LinkRequestBody;
     if (!linkRequest.fields.issue_id) {
@@ -39,7 +39,7 @@ router.post('/', async (request, response):Promise<void> => {
         return;
     }
 
-    let issue = await Server.Youtrack.issues.byId(linkRequest.fields.issue_id);
+    const issue = await Server.Youtrack.issues.byId(linkRequest.fields.issue_id);
     if (!issue) {
         Logging.Instance.logDebug(`Issue ${linkRequest.fields.issue_id} not found`, 'SNY-YT');
         response.status(404).json({});
@@ -48,7 +48,7 @@ router.post('/', async (request, response):Promise<void> => {
 
     if (issue.fields)
     {
-        let hasCustomField = issue.fields.some((field) => {
+        const hasCustomField = issue.fields.some((field) => {
             return field.id === sentryInstallation.youtrackCustomFieldId &&
                 field.value === linkRequest.issueId.toString();
         });
@@ -64,7 +64,7 @@ router.post('/', async (request, response):Promise<void> => {
 
     try {
         Logging.Instance.logDebug(`Adding link to issue ${linkRequest.fields.issue_id}, sentry issue ${linkRequest.issueId}`, 'SNY-YT');
-        let res = await Server.Youtrack.issues.update({
+        const res = await Server.Youtrack.issues.update({
                 id: linkRequest.fields.issue_id,
                 fields: [
                     {
@@ -74,12 +74,12 @@ router.post('/', async (request, response):Promise<void> => {
                         $type: 'SimpleIssueCustomField'
                     }
                 ]
-            } as any);
+            } as YouTrackUpdateIssueExtended);
         Logging.Instance.logDebug('Issue updated successfully', 'SNY-YT');
         Logging.Instance.logDebug('Response: ' + JSON.stringify(res), 'SNY-YT');
 
         // Respond to Sentry with the exact fields it requires to complete the link.
-        let responseBody:LinkResponseBody = {
+        const responseBody:LinkResponseBody = {
             webUrl: YouTrackConfig.Instance.baseUrl + '/issue/' + linkRequest.fields.issue_id,
             project: linkRequest.project.id.toString(),
             identifier: `${res.id}`,

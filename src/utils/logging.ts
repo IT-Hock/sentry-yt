@@ -17,7 +17,7 @@
  */
 
 //import {injectable} from 'inversify'; // For dependency injection
-import winston, {format} from 'winston';
+import winston, {format, Logger} from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 
 export type LogContext = object;
@@ -32,6 +32,7 @@ export enum LogLevel {
 //@injectable() // Coming from inversify
 export class Logging {
     private static _instance: Logging;
+
     public static get Instance(): Logging {
         if (!this._instance) {
             this._instance = new Logging();
@@ -45,19 +46,19 @@ export class Logging {
         this._logger = this._initializeWinston();
     }
 
-    public logInfo(msg: string, prefix?: string, context?: LogContext) {
+    public logInfo(msg: string, prefix?: string, context?: LogContext):void {
         this._log(msg, LogLevel.INFO, prefix, context);
     }
 
-    public logWarn(msg: string, prefix?: string, context?: LogContext) {
+    public logWarn(msg: string, prefix?: string, context?: LogContext): void {
         this._log(msg, LogLevel.WARN, prefix, context);
     }
 
-    public logError(msg: string, prefix?: string, context?: LogContext) {
+    public logError(msg: string, prefix?: string, context?: LogContext): void {
         this._log(msg, LogLevel.ERROR, prefix, context);
     }
 
-    public logDebug(msg: string, prefix?: string, context?: LogContext) {
+    public logDebug(msg: string, prefix?: string, context?: LogContext): void {
         if (process.env.NODE_ENV === 'production') {
             return;
         }
@@ -65,11 +66,11 @@ export class Logging {
         this._log(msg, LogLevel.DEBUG, prefix, context);
     }
 
-    private _log(msg: string, level: LogLevel, prefix?: string, context?: LogContext) {
+    private _log(msg: string, level: LogLevel, prefix?: string, context?: LogContext): void {
         this._logger.log(level, msg, {context: context, prefix: prefix});
     }
 
-    private _initializeWinston() {
+    private _initializeWinston():Logger {
         let logLevel = LogLevel.INFO;
         if (process.env.NODE_ENV !== 'production') {
             logLevel = LogLevel.DEBUG;
@@ -89,8 +90,8 @@ export class Logging {
         });
     }
 
-    private static _getTransports() {
-        const transports: Array<any> = [
+    private static _getTransports(): Array<winston.transport> {
+        const transports: Array<winston.transport> = [
             new winston.transports.Console({
                 format: this._getFormatForConsole(),
             }),
@@ -104,14 +105,14 @@ export class Logging {
         return transports;
     }
 
-    private static _getFormatForConsole() {
+    private static _getFormatForConsole(): winston.Logform.Format {
         return format.combine(
             format.timestamp({
                 format: 'YYYY-MM-DD',
                 alias: 'date'
             }),
             format.timestamp({
-                format: "HH:mm:ss",
+                format: 'HH:mm:ss',
                 alias: 'time'
             }),
             format.prettyPrint(),
@@ -147,9 +148,9 @@ export class Logging {
         );
     }
 
-    private static _getFileTransport() {
+    private static _getFileTransport(): DailyRotateFile {
         return new DailyRotateFile({
-            filename: `sentry-yt-%DATE%.log`,
+            filename: 'sentry-yt-%DATE%.log',
             zippedArchive: true,
             maxSize: '10m',
             maxFiles: '14d',

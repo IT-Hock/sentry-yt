@@ -18,10 +18,10 @@
 
 import express, {NextFunction, Request, Response} from 'express';
 
-import Server from "../../../server";
-import {getIssues} from "../../../utils/CustomYouTrack";
-import {Logging} from "../../../utils/logging";
-import SentryInstallationConfig from "../../../config/SentryInstallationConfig";
+import Server from '../../../server';
+import {getIssues} from '../../../utils/CustomYouTrack';
+import {Logging} from '../../../utils/logging';
+import SentryInstallationConfig from '../../../config/SentryInstallationConfig';
 
 const router = express.Router();
 
@@ -43,7 +43,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
             return;
         }
         const sentryIssues = issues.map((issue) => {
-            return issue.selectField
+            return issue.selectField;
         });
         Logging.Instance.logDebug('Fetched ' + sentryIssues.length + ' issues from Youtrack', 'SNY-YT');
         Logging.Instance.logDebug(`Youtrack issues: ${JSON.stringify(issues)}`, 'SNY-YT');

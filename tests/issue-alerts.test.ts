@@ -23,7 +23,7 @@ import issueAlertTriggeredPayload from './fixtures/issues/alerts/triggered.json'
 
 // Mock the verifySentrySignature middleware to always pass
 jest.mock('../src/api/middleware', () => ({
-    verifySentrySignature: (request: Request, response: Response, next: NextFunction) => next(),
+    verifySentrySignature: (request: Request, response: Response, next: NextFunction):void => next(),
 }));
 
 describe('Issue Alerts Webhooks', () => {

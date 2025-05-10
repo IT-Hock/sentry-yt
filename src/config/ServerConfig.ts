@@ -1,4 +1,4 @@
-import {Logging} from "../utils/logging";
+import {Logging} from '../utils/logging';
 
 export default class ServerConfig {
     private readonly _host: string;
@@ -20,7 +20,7 @@ export default class ServerConfig {
         this._host = (host ?? process.env.HOST) ?? 'localhost';
         this._port = port ?? parseInt(process.env.PORT ?? '3000', 10);
 
-        Logging.Instance.logDebug(`Config loaded`, 'SNY-YT');
+        Logging.Instance.logDebug('Config loaded', 'SNY-YT');
     }
 
     public get host(): string {

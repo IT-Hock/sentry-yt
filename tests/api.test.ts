@@ -16,7 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import express from 'express';
 import apiRoutes from '../src/api';
 
 describe('API Routes', () => {

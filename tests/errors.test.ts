@@ -19,10 +19,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 import request from 'supertest';
 import sentryRoutes from '../src/api/sentry';
+import errorCreatedPayload from './fixtures/errors/created.json';
 
 // Mock the verifySentrySignature middleware to always pass
 jest.mock('../src/api/middleware', () => ({
-  verifySentrySignature: (request: Request, response: Response, next: NextFunction) => next(),
+  verifySentrySignature: (request: Request, response: Response, next: NextFunction):void => next(),
 }));
 
 describe('Errors Webhooks', () => {
@@ -36,9 +37,6 @@ describe('Errors Webhooks', () => {
 
   describe('POST /sentry/webhook', () => {
     it('should handle error created webhook', async () => {
-      // Load the fixture
-      const errorCreatedPayload = require('./fixtures/errors.json');
-
       // Send the request
       const response = await request(app)
         .post('/sentry/webhook')
