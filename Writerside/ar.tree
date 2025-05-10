@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="ar"
+                  name="API Reference" start-page="API_Reference.md">
+
+    <toc-element topic="API_Reference.md">
+        <toc-element topic="Schemas.md"/>
+        <toc-element topic="GET_issues.md"/>
+        <toc-element topic="GET_sentry_members.md"/>
+        <toc-element topic="GET_users.md"/>
+        <toc-element topic="GET_items.md"/>
+        <toc-element topic="GET_sentry.md"/>
+        <toc-element topic="POST_.md"/>
+        <toc-element topic="GET_sentry_issues.md"/>
+        <toc-element topic="POST_sentry_issues_link.md"/>
+    </toc-element>
+</instance-profile>

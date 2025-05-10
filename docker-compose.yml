@@ -1,0 +1,26 @@
+services:
+  rest-server:
+    hostname: yt.sentry.local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+      - sentry-self-hosted_default
+#    environment:
+      #- NODE_ENV=test
+      #- NODE_ENV=production
+      #- HOST=0.0.0.0
+      #- PORT=3000
+      #- YOUTRACK_BASE_URL=
+      #- YOUTRACK_TOKEN=
+#    volumes:
+#      - ./logs:/usr/src/app/dist/logs
+    restart: unless-stopped
+
+networks:
+  default: {}
+  sentry-self-hosted_default:
+    external: true

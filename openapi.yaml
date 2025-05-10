@@ -1,0 +1,56 @@
+openapi: "3.1.0"
+info:
+  title: "sentry_yt API"
+  description: "sentry_yt API"
+  version: "1.0.0"
+servers:
+  - url: "https://sentry_yt"
+paths:
+  /sentry/issues/link:
+    post:
+      summary: "POST sentry/issues/link"
+      responses:
+        "200":
+          description: "OK"
+  /sentry/issues:
+    get:
+      summary: "GET sentry/issues"
+      responses:
+        "200":
+          description: "OK"
+  /:
+    post:
+      summary: "POST "
+      responses:
+        "200":
+          description: "OK"
+  /sentry:
+    get:
+      summary: "GET sentry"
+      responses:
+        "200":
+          description: "OK"
+  /items:
+    get:
+      summary: "GET items"
+      responses:
+        "200":
+          description: "OK"
+  /users:
+    get:
+      summary: "GET users"
+      responses:
+        "200":
+          description: "OK"
+  /sentry/members:
+    get:
+      summary: "GET sentry/members"
+      responses:
+        "200":
+          description: "OK"
+  /issues:
+    get:
+      summary: "GET issues"
+      responses:
+        "200":
+          description: "OK"

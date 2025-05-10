@@ -1,0 +1,37 @@
+{
+  "elements": [
+    {
+      "type": "issue-link",
+      "link": {
+        "uri": "/sentry/issues/link",
+        "required_fields": [
+          {
+            "type": "select",
+            "label": "Issue",
+            "name": "issue_id",
+            "uri": "/sentry/issues"
+          }
+        ]
+      },
+      "create": {
+        "uri": "/sentry/issues/create",
+        "required_fields": [
+          {
+            "type": "text",
+            "label": "Title",
+            "name": "title"
+          }
+        ],
+        "optional_fields": [
+          {
+            "type": "select",
+            "label": "Owner",
+            "name": "owner",
+            "uri": "/sentry/members",
+            "async": true
+          }
+        ]
+      }
+    }
+  ]
+}
