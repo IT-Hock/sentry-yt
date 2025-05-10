@@ -65,15 +65,16 @@ export default class Server {
         if (serverConfig.useCors) {
             this._app.use(cors());
         }
-        this._app.use(helmet());;
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: true}));
         this._app.use(express.text({ type: '*/*' }));
         if (process.env.NODE_ENV !== 'production') {
             this._app.use(this.LogRequest.bind(this));
+        }else{
+            this._app.use(helmet());
+            this._app.use(verifyInstallation);
+            this._app.use(verifySentrySignature);
         }
-        this._app.use(verifyInstallation);
-        this._app.use(verifySentrySignature);
 
         this._app.use('/', apiRoutes);
         this._app.use(function (req, res/*, next*/):void {
