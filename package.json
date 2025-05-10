@@ -30,13 +30,13 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "npm run clean && tsc-watch --build tsconfig.build.json --onSuccess \"node dist/app.js\"",
-    "build": "tsc",
+    "build": "npm run clean && tsc --build tsconfig.build.json",
     "lint": "eslint .",
     "test": "jest",
     "test:watch": "jest --watch",
-    "docker:build": "tsc && docker build -t sentry-yt .",
+    "docker:build": "npm run build && docker build -t sentry-yt .",
     "docker:run": "docker run -p 3000:3000 --env-file .env sentry-yt",
-    "docker:compose:up": "tsc && docker-compose up --build -d"
+    "docker:compose:up": "npm run build && docker-compose up --build -d"
   },
   "dependencies": {
     "axios": "^1.9.0",
