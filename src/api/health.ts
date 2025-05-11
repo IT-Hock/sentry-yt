@@ -16,16 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import express from 'express';
-import sentryRoutes from './sentry';
-import healthRoutes from './health';
-import docRoutes from './docs';
-import {verifyInstallationMiddleware, verifySentrySignatureMiddleware} from "./middleware";
+import {getYouTrackTelemetry} from "../utils/CustomYouTrack";
+import express from "express";
+import {version} from '../../package.json';
 
 const router = express.Router();
 
-router.use('/sentry', verifyInstallationMiddleware, verifySentrySignatureMiddleware, sentryRoutes);
-router.use('/health', healthRoutes);
-router.use('/docs', docRoutes);
+router.get('/', (request, response) => {
+    response.status(200).json({
+        message: 'Sentry YouTrack Integration API',
+        version: version,
+    });
+});
+
+router.get('/youtrack', async (request, response) => {
+    // Use axios to check if the YouTrack server is reachable
+    const result = await getYouTrackTelemetry();
+    if (result) {
+        response.status(200).json({
+            message: 'YouTrack server is reachable',
+        });
+    } else {
+        response.status(503).json({
+            message: 'YouTrack server is not reachable',
+        });
+    }
+});
 
 export default router;
