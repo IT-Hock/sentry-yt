@@ -19,26 +19,29 @@
 import {NextFunction, Request, Response} from 'express';
 import {Logging} from '../../utils/logging';
 import SentryInstallationConfig from '../../config/SentryInstallationConfig';
+import {getInstallation} from "../../utils/SentryYouTrack";
 
 export default function verifyInstallationMiddleware(
     request: Request,
     response: Response,
     next: NextFunction
-):void {
+): void {
+    // Skip verification in test environment except when SKIP_SIG_VERIFY is explicitly set to false
     if (process.env.NODE_ENV == 'test' && process.env.SKIP_SIG_VERIFY !== 'false') {
         Logging.Instance.logDebug('Skipping installation verification in test environment', 'SNY-YT');
         return next();
     }
 
-    // The installation id is passed in the query string
-    const installationId:string|null = request?.query?.installationId ?? request?.body?.installationId ?? null;
+    // The installation id is passed in the query string or the body
+    const installationId: string | null = request?.query?.installationId ?? request?.body?.installationId ?? null;
     if (installationId === null || installationId === undefined || installationId === '') {
         Logging.Instance.logError('Missing installation id', 'SNY-YT');
         response.status(403).json({});
         return;
     }
 
-    const sentryInstallation = SentryInstallationConfig.Instance.getFromInstallationId(installationId);
+    // Retrieve the installation from the installation id
+    const sentryInstallation = getInstallation(installationId);
     if (!sentryInstallation) {
         Logging.Instance.logError('Invalid installation id', 'SNY-YT');
         response.status(403).json({});

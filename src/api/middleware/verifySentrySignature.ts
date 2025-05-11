@@ -19,46 +19,50 @@
 import {createHmac} from 'crypto';
 import {NextFunction, Request, Response} from 'express';
 import {Logging} from '../../utils/logging';
+import checkSignature, {getSignatureFromHeader} from "../../utils/Sentry";
 
 function getSignatureBody(req: Request): string {
-    const stringifiedBody = JSON.stringify(req.body);
-    if(req.body === undefined || req.body === null || stringifiedBody === undefined || stringifiedBody === null) {
+    // Special case if the body is empty
+    if (req.body === undefined || req.body === null) {
         return '';
     }
-    // HACK: This is necessary since express.json() converts the empty request body to {}
-    return stringifiedBody === '{}' ? '' : stringifiedBody;
+
+    const jsonStringBody = JSON.stringify(req.body);
+    if (jsonStringBody === null || jsonStringBody === undefined) {
+        return '';
+    }
+    return jsonStringBody === '{}' ? '' : jsonStringBody;
 }
 
-export default function verifySentrySignature(
+/**
+ * This function will authenticate that the requests are coming from Sentry.
+ * It allows us to be confident that all the code run after this middleware are
+ * using verified data sent directly from Sentry.
+ */
 export default function verifySentrySignatureMiddleware(
     request: Request,
     response: Response,
     next: NextFunction
-) {
-    /**
-     * This function will authenticate that the requests are coming from Sentry.
-     * It allows us to be confident that all the code run after this middleware are
-     * using verified data sent directly from Sentry.
-     */
+):void {
+    // Skip signature verification in test environment, except if SKIP_SIG_VERIFY is explicitly set to false
     if (process.env.NODE_ENV == 'test' && process.env.SKIP_SIG_VERIFY !== 'false') {
         Logging.Instance.logDebug('Skipping signature verification in test environment', 'SNY-YT');
-        return next();
+        next();
+        return;
     }
-    if(process.env.SENTRY_CLIENT_SECRET == null) {
+    if (process.env.SENTRY_CLIENT_SECRET == null) {
         Logging.Instance.logError('SENTRY_CLIENT_SECRET is not set. Skipping signature verification.');
-        return next();
+        next();
+        return;
     }
-    const hmac = createHmac('sha256', process.env.SENTRY_CLIENT_SECRET);
+
     const signatureBody = getSignatureBody(request);
-    hmac.update(signatureBody, 'utf8');
-    const digest = hmac.digest('hex');
-    if (
-        // HACK: The signature header may be one of these two values
-        digest === request.headers['sentry-hook-signature'] ||
-        digest === request.headers['sentry-app-signature']
-    ) {
-        return next();
+    const signatureHeader:string = getSignatureFromHeader(request.headers);
+    if(!checkSignature(process.env.SENTRY_CLIENT_SECRET, signatureBody, signatureHeader)) {
+        Logging.Instance.logError('Signature verification failed. Skipping signature verification.');
+        response.sendStatus(401);
+        return;
     }
-    console.info('Unauthorized: Could not verify request came from Sentry');
-    response.sendStatus(401);
+
+    next();
 }
