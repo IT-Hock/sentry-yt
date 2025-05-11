@@ -17,19 +17,12 @@
  */
 
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import openapi from '../../openapi.json';
 
-import sentryRoutes from './sentry';
-import docRoutes from './docs';
 
 const router = express.Router();
 
-router.use('/sentry', sentryRoutes);
-router.get('/', (request, response) => {
-    response.status(200).json({
-        message: 'Sentry YouTrack Integration API',
-        version: '1.0.0',
-    });
-});
-router.use('/docs', docRoutes);
+router.use('/', swaggerUi.serve, swaggerUi.setup(openapi));
 
 export default router;
