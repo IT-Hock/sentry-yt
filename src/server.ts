@@ -23,6 +23,7 @@ import YouTrackConfig from './config/YouTrackConfig';
 import ServerConfig from './config/ServerConfig';
 import dotenv from 'dotenv';
 import verifySentrySignature from './api/middleware/verifySentrySignature';
+
 import apiRoutes from './api';
 import cors from 'cors';
 import {verifyInstallation} from './api/middleware';
@@ -72,7 +73,6 @@ export default class Server {
             this._app.use(this.LogRequest.bind(this));
         }else{
             this._app.use(helmet());
-            this._app.use(verifyInstallation);
             this._app.use(verifySentrySignature);
         }
 

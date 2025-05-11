@@ -20,6 +20,7 @@ import express from 'express';
 
 import sentryRoutes from './sentry';
 import docRoutes from './docs';
+import {verifyInstallationMiddleware, verifySentrySignatureMiddleware} from "./middleware";
 
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.get('/', (request, response) => {
         version: '1.0.0',
     });
 });
+router.use('/sentry', verifyInstallationMiddleware, verifySentrySignatureMiddleware, sentryRoutes);
 router.use('/docs', docRoutes);
 
 export default router;

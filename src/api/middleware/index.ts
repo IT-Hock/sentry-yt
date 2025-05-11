@@ -16,10 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import verifySentrySignature from './verifySentrySignature';
-import verifyInstallation from './verifyInstallation';
+import verifySentrySignatureMiddleware from './verifySentrySignature';
+import verifyInstallationMiddleware from './verifyInstallation';
+import logRequestsMiddleware from "./logRequests";
+import notFoundMiddleware from "./notFound";
 
 export {
-    verifySentrySignature,
-    verifyInstallation
+    verifySentrySignatureMiddleware,
+    verifyInstallationMiddleware,
+    logRequestsMiddleware,
+    notFoundMiddleware
 };

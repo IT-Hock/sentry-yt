@@ -30,6 +30,7 @@ function getSignatureBody(req: Request): string {
 }
 
 export default function verifySentrySignature(
+export default function verifySentrySignatureMiddleware(
     request: Request,
     response: Response,
     next: NextFunction

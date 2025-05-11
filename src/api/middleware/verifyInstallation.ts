@@ -20,7 +20,7 @@ import {NextFunction, Request, Response} from 'express';
 import {Logging} from '../../utils/logging';
 import SentryInstallationConfig from '../../config/SentryInstallationConfig';
 
-export default function verifyInstallation(
+export default function verifyInstallationMiddleware(
     request: Request,
     response: Response,
     next: NextFunction
