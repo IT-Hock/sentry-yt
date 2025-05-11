@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {Logging} from "./logging";
-import SentryInstallationConfig, {SentryInstallation} from "../config/SentryInstallationConfig";
-import {HelmetOptions} from "helmet";
+import {Logging} from './logging';
+import SentryInstallationConfig, {SentryInstallation} from '../config/SentryInstallationConfig';
+import {HelmetOptions} from 'helmet';
 
 /**
  * Get the installation from the installation id
@@ -54,12 +54,12 @@ export function getHelmetConfig():HelmetOptions{
     if (process.env.SECURITY_ENABLE_CONTENT_SECURITY_POLICY) {
         helmetConfig.contentSecurityPolicy = {
             directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-                styleSrc: ["'self'", "'unsafe-inline'"],
-                imgSrc: ["'self'", 'data:', 'https://www.gravatar.com'],
-                connectSrc: ["'self'", 'https://*.sentry.io', 'https://*.youtrack.cloud', 'https://*.youtrack.jetbrains.com'],
-                frameAncestors: ["'self'"]
+                defaultSrc: ['\'self\''],
+                scriptSrc: ['\'self\'', '\'unsafe-inline\'', '\'unsafe-eval\''],
+                styleSrc: ['\'self\'', '\'unsafe-inline\''],
+                imgSrc: ['\'self\'', 'data:', 'https://www.gravatar.com'],
+                connectSrc: ['\'self\'', 'https://*.sentry.io', 'https://*.youtrack.cloud', 'https://*.youtrack.jetbrains.com'],
+                frameAncestors: ['\'self\'']
             }
         };
     }

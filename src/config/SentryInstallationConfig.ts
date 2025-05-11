@@ -59,7 +59,7 @@ export default class SentryInstallationConfig {
         Logging.Instance.logDebug('Config loaded', 'SENTRY');
     }
 
-    private loadFromFile(filePath: string) {
+    private loadFromFile(filePath: string):void {
         Logging.Instance.logDebug('Loading Config from ' + filePath, 'SENTRY');
         const configFile = fs.readFileSync(filePath, 'utf8');
         const config = JSON.parse(configFile);

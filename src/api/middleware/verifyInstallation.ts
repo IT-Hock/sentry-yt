@@ -18,8 +18,7 @@
 
 import {NextFunction, Request, Response} from 'express';
 import {Logging} from '../../utils/logging';
-import SentryInstallationConfig from '../../config/SentryInstallationConfig';
-import {getInstallation} from "../../utils/SentryYouTrack";
+import {getInstallation} from '../../utils/SentryYouTrack';
 
 export default function verifyInstallationMiddleware(
     request: Request,

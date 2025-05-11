@@ -20,7 +20,7 @@ import express from 'express';
 import sentryRoutes from './sentry';
 import healthRoutes from './health';
 import docRoutes from './docs';
-import {verifyInstallationMiddleware, verifySentrySignatureMiddleware} from "./middleware";
+import {verifyInstallationMiddleware, verifySentrySignatureMiddleware} from './middleware';
 
 const router = express.Router();
 

@@ -19,7 +19,9 @@
 import express from 'express';
 
 const router = express.Router();
+export default router;
 
+/*
 type SentrySelectOption = {
     label: string;
     value: string;
@@ -45,7 +47,7 @@ router.get('/items', async (request, response): Promise<void> => {
         label: item.title,
         value: item.id,
     }));
-    console.info('Populating item options in Sentry');*/
+    console.info('Populating item options in Sentry');* /
     const result: SentrySelectOption[] = [];
     response.send(result);
 });
@@ -67,9 +69,8 @@ router.get('/users', async (request, response): Promise<void> => {
         label: user.name,
         value: user.id,
     }));
-    console.info('Populating user options in Sentry');*/
+    console.info('Populating user options in Sentry');* /
     const result: SentrySelectOption[] = [];
     response.send(result);
 });
-
-export default router;
+*/

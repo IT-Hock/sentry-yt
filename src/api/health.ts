@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {getYouTrackTelemetry} from "../utils/CustomYouTrack";
-import express from "express";
+import {getYouTrackTelemetry} from '../utils/CustomYouTrack';
+import express from 'express';
 import {version} from '../../package.json';
 
 const router = express.Router();

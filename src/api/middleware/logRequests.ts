@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import express from "express";
-import {Logging} from "../../utils/logging";
+import express from 'express';
+import {Logging} from '../../utils/logging';
 
 export default function logRequestsMiddleware(req: express.Request, res: express.Response, next: express.NextFunction): void {
     // Output [GET] /api/v1/...

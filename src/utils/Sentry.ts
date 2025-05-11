@@ -16,9 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {createHmac} from "crypto";
-import {Logging} from "./logging";
-import {IncomingHttpHeaders} from "node:http";
+import {createHmac} from 'crypto';
+import {Logging} from './logging';
+import {IncomingHttpHeaders} from 'node:http';
 
 export function getSignatureFromHeader(headers: IncomingHttpHeaders): string {
     const signatureHeader = headers['sentry-hook-signature'] || headers['sentry-app-signature'];
@@ -29,7 +29,7 @@ export function getSignatureFromHeader(headers: IncomingHttpHeaders): string {
     return signatureHeader;
 }
 
-export default function checkSignature(secret: string, data: string, signature: string) {
+export default function checkSignature(secret: string, data: string, signature: string):boolean {
     const hmac = createHmac('sha256', secret);
     hmac.update(data, 'utf8');
     const digest = hmac.digest('hex');

@@ -25,8 +25,8 @@ import dotenv from 'dotenv';
 
 // Middlewares
 import helmet from 'helmet';
-import {getHelmetConfig} from "./utils/SentryYouTrack";
-import {logRequestsMiddleware, verifyInstallationMiddleware, verifySentrySignatureMiddleware, notFoundMiddleware} from "./api/middleware";
+import {getHelmetConfig} from './utils/SentryYouTrack';
+import {logRequestsMiddleware, notFoundMiddleware} from './api/middleware';
 // Routes
 import apiRoutes from './api';
 

@@ -18,8 +18,8 @@
 
 import verifySentrySignatureMiddleware from './verifySentrySignature';
 import verifyInstallationMiddleware from './verifyInstallation';
-import logRequestsMiddleware from "./logRequests";
-import notFoundMiddleware from "./notFound";
+import logRequestsMiddleware from './logRequests';
+import notFoundMiddleware from './notFound';
 
 export {
     verifySentrySignatureMiddleware,

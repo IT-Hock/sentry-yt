@@ -16,10 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import {createHmac} from 'crypto';
 import {NextFunction, Request, Response} from 'express';
 import {Logging} from '../../utils/logging';
-import checkSignature, {getSignatureFromHeader} from "../../utils/Sentry";
+import checkSignature, {getSignatureFromHeader} from '../../utils/Sentry';
 
 function getSignatureBody(req: Request): string {
     // Special case if the body is empty

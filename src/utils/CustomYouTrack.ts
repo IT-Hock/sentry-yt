@@ -18,10 +18,10 @@
 
 import {PaginationOptions} from 'youtrack-rest-client/dist/options/pagination_options';
 import {YoutrackClient} from 'youtrack-rest-client/dist/youtrack_client';
-import {Issue} from '../models/Issue.model';
-import axios from "axios";
-import YouTrackConfig from "../config/YouTrackConfig";
-import {Logging} from "./logging";
+import {Issue, YouTrackIssueExtended} from '../models/Issue.model';
+import axios from 'axios';
+import YouTrackConfig from '../config/YouTrackConfig';
+import {Logging} from './logging';
 
 export function constructSearchQuery(
     projectId: string,
@@ -50,7 +50,7 @@ export async function getIssues(
             ...paginationOptions,
             fields: 'id,idReadable,summary'
         }
-    })).map((issue: any) => {
+    })).map((issue: YouTrackIssueExtended) => {
         return Issue.fromYoutrackIssue(issue);
     });
 }
@@ -59,7 +59,7 @@ export async function getYouTrackTelemetry(): Promise<boolean> {
     const result = await axios.get(`${YouTrackConfig.Instance.baseUrl}/api/admin/telemetry`,
         {
             headers: {
-                "Authorization": `Bearer ${YouTrackConfig.Instance.token}`,
+                'Authorization': `Bearer ${YouTrackConfig.Instance.token}`,
             }
         }
     );

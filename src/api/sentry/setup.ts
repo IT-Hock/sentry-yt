@@ -15,9 +15,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-import axios from 'axios';
 import express from 'express';
+
+const router = express.Router();
+
+export default router;
+
+/*
+import axios from 'axios';
 
 export type TokenResponseData = {
     expiresAt: string; // ISO date string at which token must be refreshed
@@ -35,8 +40,6 @@ export type InstallResponseData = {
     };
     uuid: string; // UUID for the individual installation
 };
-
-const router = express.Router();
 
 router.post('/', async (req, res) => {
     // Destructure the all the body params we receive from the installation prompt
@@ -91,7 +94,7 @@ router.post('/', async (req, res) => {
 
     // Update the associated organization to connect it to Sentry's organization
     organization.externalSlug = sentryOrgSlug;
-    await organization.save();*/
+    await organization.save();* /
 
     const {token, refreshToken, expiresAt} = tokenResponse.data;
     const verifyResponse: {data: InstallResponseData} = await axios.put(
@@ -113,5 +116,4 @@ router.post('/', async (req, res) => {
         redirectUrl: `${process.env.SENTRY_URL}/settings/${sentryOrgSlug}/sentry-apps/${verifyResponse.data.app.slug}/`,
     });
 });
-
-export default router;
+*/

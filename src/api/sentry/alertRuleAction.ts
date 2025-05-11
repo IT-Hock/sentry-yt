@@ -20,6 +20,9 @@ import express from 'express';
 
 const router = express.Router();
 
+export default router;
+
+/*
 // The shape of your settings will depend on how you configure your form fields
 // This example coordinates with integration-schema.json for 'alert-rule-settings'
 export type AlertRuleSettings = {
@@ -68,12 +71,11 @@ router.post('/', async (request, response) => {
         if (!user) {
             return response.status(400).send({message: 'Selected user was not found'});
         }
-    }*/
+    }* /
 
     console.info('Successfully validated Sentry alert rule');
 
     // By sending a successful response code, we are approving that alert to notify our application.
     response.sendStatus(200);
 });
-
-export default router;
+*/

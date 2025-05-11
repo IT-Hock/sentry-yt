@@ -15,7 +15,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+import express from 'express';
+const router = express.Router();
+export default router;
 
+/*
 import express, {Request, Response} from 'express';
 
 import {InstallResponseData} from './setup';
@@ -71,7 +75,7 @@ router.post('/', async (request: Request, response: Response): Promise<void> => 
     if (resource === 'event_alert' || resource === 'metric_alert') {
         await alertHandler(response, resource, action, sentryInstallation, data);
     }
-*/
+* /
 
     // Handle uninstallation webhook
     if (resource === 'installation' && action === 'deleted') {
@@ -99,8 +103,7 @@ async function handleUninstall(
     console.info(
         `Uninstalled ${installData.app.slug} from '${installData.organization.slug}'`
     );
-    return response.status(204);*/
+    return response.status(204);* /
     return response.status(204);
 }
-
-export default router;
+*/
