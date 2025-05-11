@@ -46,7 +46,7 @@ export class Logging {
         this._logger = this._initializeWinston();
     }
 
-    public logInfo(msg: string, prefix?: string, context?: LogContext):void {
+    public logInfo(msg: string, prefix?: string, context?: LogContext): void {
         this._log(msg, LogLevel.INFO, prefix, context);
     }
 
@@ -70,7 +70,7 @@ export class Logging {
         this._logger.log(level, msg, {context: context, prefix: prefix});
     }
 
-    private _initializeWinston():Logger {
+    private _initializeWinston(): Logger {
         let logLevel = LogLevel.INFO;
         if (process.env.NODE_ENV !== 'production') {
             logLevel = LogLevel.DEBUG;
@@ -133,7 +133,9 @@ export class Logging {
                         context?: LogContext
                     };
 
-                    const paddedPrefix = metadata.prefix ? metadata.prefix.padEnd(8) : ' '.repeat(8);
+                    // noinspection SuspiciousTypeOfGuard
+                    const paddedPrefix = metadata.prefix && (typeof metadata.prefix === 'string') && metadata.prefix.length > 0
+                        ? metadata.prefix.padEnd(8) : ' '.repeat(8);
                     const paddedLevel = level.padEnd(5);
                     if (!context) {
                         return `[${date}] [${time}] [${paddedPrefix}] [${paddedLevel.toUpperCase()}]: ${message}`;
