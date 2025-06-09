@@ -57,7 +57,7 @@
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.30",
     "@types/supertest": "^6.0.3",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/validator": "^13.15.0",
